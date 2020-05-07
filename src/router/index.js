@@ -21,6 +21,12 @@ const routes = [
     {
     path: '*',
     redirect: '/'
+  },
+  {
+
+      path:'/signup',
+      name: 'signUp',
+      component: () => import('../views/SignUp.vue')
   }];
 
     function castRouteParamsId(route) {

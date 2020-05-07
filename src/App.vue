@@ -2,8 +2,7 @@
   <div id="app">
     <h1>Bienvenue à VideoLy</h1>
     <nav>
-      <router-link to="">Se connecter</router-link>
-      <router-link to="">S'inscrire</router-link>
+      <router-link to="/signup"><span class="lienNav">S'inscrire</span></router-link>
     </nav>
     <router-view/>
     <footer>
@@ -21,6 +20,7 @@
 </script>
 
 <style>
+          /* APP */
   body,html{
     height:auto;
     width:100%;
@@ -48,4 +48,55 @@
     color: #E8DDCB;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   }
+
+  h2{
+    color:#E8DDCB;
+  }
+
+  nav{
+    width:50%;
+  }
+
+  .lienNav{
+    color: white;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 25px;
+    text-decoration:none;
+    cursor: pointer;
+  }
+
+  .lienNav:hover{
+    color: white;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 35px;
+    text-decoration:white;
+    cursor: pointer;
+  }
+
+        /* SIGN UP */
+  #inscriptionPage{
+    background-color: rgb(3,101,100);
+  }
+
+  #sectionFormulaireInscription{
+    width:50%;
+    margin-left: 20%;
+  }
+
+  #sectionFormulaireInscription label{
+    float: right;
+    color: white;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 18px;
+  }
+
+    #sectionFormulaireInscription input{
+    float: left;
+  }
+
+  .modifButton{
+    float: right;
+  }
+
+
 </style>
