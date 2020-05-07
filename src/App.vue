@@ -2,6 +2,7 @@
   <div id="app">
     <h1>Bienvenue à VideoLy</h1>
     <nav>
+      <router-link to="/"><span class="lienNav">Accueil</span></router-link>
       <router-link to="/signup"><span class="lienNav">S'inscrire</span></router-link>
     </nav>
     <router-view/>
@@ -20,7 +21,7 @@
 </script>
 
 <style>
-          /* APP */
+                                    /* APP */
   body,html{
     height:auto;
     width:100%;
@@ -63,6 +64,7 @@
     font-size: 25px;
     text-decoration:none;
     cursor: pointer;
+    margin-left: 50px;
   }
 
   .lienNav:hover{
@@ -72,8 +74,120 @@
     text-decoration:white;
     cursor: pointer;
   }
+                                      /* ACCUEIL-INDEX */
+  ul{
+    background-color: #033649;
+    width:80%;
+    margin-left: auto;
+    margin-right: auto;
+    list-style:none;
+  }
 
-        /* SIGN UP */
+  ul h2{
+    width : 100%;
+    padding-top: 30px;
+    font-size: 35px;
+    color: #E8DDCB;
+    font-family: cursive;
+  }
+
+  #searchBar{
+    margin-top: 10px;
+    height:30px;
+    width: 10%;
+    font-size: 17px;
+    border: 1px solid grey;
+    cursor: pointer;
+    background: #f1f1f1;
+    margin-left: 50%;
+  }
+
+  .beforeButton{
+    background-color: darkorchid;
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    float: left;
+    margin-top: -50px;
+  }
+
+  .nextButton{
+    background-color: darkorchid;
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    float: right;
+    margin-top: -50px;
+  }
+                                      /* FILM LIST */
+  .active{
+    visibility:hidden;
+  }
+
+  #filmSection{
+    width:90%;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 2px dashed red;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: center;
+  }
+
+  img{
+    float:left;
+    width:150px;
+  }
+
+  #champsText{
+    text-align: center;
+    margin: auto;
+    padding-top: 10px;
+    width:60%;
+    background-color: rgb(3,101,100);
+  }
+
+  .underligne{
+    text-decoration: underline;
+  }
+
+  router-link{
+    color: white;
+  }
+
+  #lien{
+    background-color: #f44336;
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    justify-content: center;
+  }
+
+  #lien:hover{
+    background-color: #008CBA;
+  }
+
+  p{
+    font-size: 18px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+  h3{
+    font-size: 25px;
+    color: #E8DDCB;
+    font-family: cursive;
+  }
+                                      /* SIGN UP */
   #inscriptionPage{
     background-color: rgb(3,101,100);
   }
@@ -94,8 +208,9 @@
     float: left;
   }
 
-  .modifButton{
-    float: right;
+  #sectionFormulaireInscription #lien{
+    margin-left: 50%;
+    margin-right: 50%;
   }
 
 
