@@ -61,8 +61,8 @@
         created(){
             ApiServices.getFirstFilms()
                 .then(response => {
-                this.films = response.data;
-                this.lastFilm();
+                    this.films = response.data;
+                    this.lastFilm();
                 })
                 .then(() => {
                     ApiServices.getLastFilm(this.lastPage)

@@ -1,13 +1,16 @@
 <template>
     <div id="inscriptionPage">
         <h2>Page Inscription</h2>
-        <form id="app" @submit="onSubmit" action="/something" method="post">
-          <p v-if="errors.length">
-            <b>Veuillez corriger ces erreur(s):</b>
-            <ul>
-                <li v-for="error in errors" :key="error.id">{{ error }}</li>
-            </ul>
-        </p>
+        <form id="app" @submit="onSubmit" novalidate="true">
+            <p v-if="errors.length">
+                <b>Veuillez corriger ces erreur(s):</b>
+                <ul>
+                    <li v-for="error in errors" :key="error.id" style="color:red">{{ error }}</li>
+                </ul>
+            </p>
+            <p v-if="inscription">
+                Inscription réussie
+            </p>
             <table id="sectionFormulaireInscription">
                 <tr>
                     <td><label for="userName">Nom d'utilisateur: </label></td>
@@ -42,6 +45,8 @@
 </template>
 
 <script>
+    import axios from 'axios'
+
     export default {
         data(){
             return{
@@ -52,11 +57,13 @@
                 mail: null,
                 firstName: null,
                 lastName: null,
+                inscription: false
             }
         },
         methods:{
             onSubmit: function (e) {
                 if (this.userName && this.password && this.passwordConfirmed && this.mail && this.firstName && this.lastName) {
+                    axios.post('http://radiant-plains-67953.herokuapp.com/api/users',{ body: this.data})
                     return true;
                 }
 
@@ -65,23 +72,51 @@
                 if (!this.userName) {
                     this.errors.push('Nom d\'utilisateur manquant.');
                 }
+                if (this.userName.length < 3) {
+                    this.errors.push('Nom d\'utilisateur trop court.');
+                }
+                if (this.userName.length > 50) {
+                    this.errors.push('Nom d\'utilisateur trop long.');
+                }
                 if (!this.password) {
                     this.errors.push('Mot de passe manquant.');
+                }
+                if (this.password.length > 50) {
+                    this.errors.push('Mot de passe trop long.');
                 }
                 if (!this.passwordConfirmed) {
                     this.errors.push('Confirmation mot de passe manquant.');
                 }
+                if (this.passwordConfirmed.length > 50) {
+                    this.errors.push('Confirmation mot de passe trop long.');
+                }
                 if (!this.mail) {
                     this.errors.push('Courriel manquant.');
+                } 
+                else if (this.mail.length > 50) {
+                    this.errors.push('Courriel trop long.');
+                }
+                else if (!this.validEmail(this.mail)) {
+                    this.errors.push('Courriel non valide.');
                 }
                 if (!this.firstName) {
                     this.errors.push('Nom manquant.');
                 }
+                if (this.firstName.length > 50) {
+                    this.errors.push('Nom trop long.');
+                }
                 if (!this.lastName) {
                     this.errors.push('Prénom manquant.');
                 }
+                if (this.lastName.length > 50) {
+                    this.errors.push('Prénom trop long.');
+                }
 
                 e.preventDefault();
+            },
+            validEmail: function (email) {
+                var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                return re.test(email);
             }
         }
     }
