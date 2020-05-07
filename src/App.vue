@@ -1,6 +1,10 @@
 <template>
   <div id="app">
     <h1>Bienvenue à VideoLy</h1>
+    <nav>
+      <router-link to="">Se connecter</router-link>
+      <router-link to="">S'inscrire</router-link>
+    </nav>
     <router-view/>
     <footer>
       <p>Fait par Paul Lenoir et Vincent Leduc</p>
