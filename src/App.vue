@@ -6,6 +6,7 @@
       <router-link to="/signup"><span class="lienNav">S'inscrire</span></router-link>
       <router-link to="/login"><span class="lienNav">Se connecter</span></router-link>
     </nav>
+    <hr>
     <router-view/>
     <footer>
       <p>Fait par Paul Lenoir et Vincent Leduc</p>
@@ -63,6 +64,11 @@
     color: #E8DDCB;
     font-family: cursive;
   } 
+
+  hr{
+    width:75%;
+    color: white;
+  }
 
   p{
     font-size: 18px;
@@ -227,7 +233,7 @@
   }
 
   #lien{
-    background-color: #f44336; /* Green */
+    background-color: #f44336; 
     border: none;
     color: white;
     padding: 12px 30px;
@@ -235,11 +241,16 @@
     text-decoration: none;
     display: inline-block;
     font-size: 18px;
+    margin-top: 15px;
   }
 
-                                      /* SIGN UP */
-  #inscriptionPage{
+                                      /* SIGN UP */ /* LOG IN */
+  #inscriptionPage, #connectionSection{
     background-color: rgb(3,101,100);
+    padding: 15px;
+    width:75%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   #sectionFormulaireInscription{
@@ -263,5 +274,16 @@
     margin-right: 50%;
   }
 
+                              /* LOG IN */
+  #connectionSection label{
+    color: white;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 18px;
+  }
 
+  #connectionSection .error{
+    color:red;
+    font-size: 16px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
 </style>

@@ -2,7 +2,9 @@
 
 ## Project setup
 ```
-npm install
+npm install -g npm@latest
+npm install -g @vue/cli
+npm install vuelidate --save
 ```
 
 ### Compiles and hot-reloads for development
