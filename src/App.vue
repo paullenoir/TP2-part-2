@@ -4,6 +4,7 @@
     <nav>
       <router-link to="/"><span class="lienNav">Accueil</span></router-link>
       <router-link to="/signup"><span class="lienNav">S'inscrire</span></router-link>
+      <router-link to="/login"><span class="lienNav">Se connecter</span></router-link>
     </nav>
     <router-view/>
     <footer>
@@ -51,11 +52,27 @@
   }
 
   h2{
-    color:#E8DDCB;
+    width : 100%;
+    padding-top: 30px;
+    font-size: 35px;
+    color: #E8DDCB;
   }
+
+  h3{
+    font-size: 25px;
+    color: #E8DDCB;
+    font-family: cursive;
+  } 
+
+  p{
+    font-size: 18px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
 
   nav{
     width:50%;
+    text-decoration:none;
   }
 
   .lienNav{
@@ -73,6 +90,11 @@
     font-size: 35px;
     text-decoration:white;
     cursor: pointer;
+    text-decoration:none;
+  }
+
+  router-link{
+    text-decoration:none;
   }
                                       /* ACCUEIL-INDEX */
   ul{
@@ -177,16 +199,44 @@
     background-color: #008CBA;
   }
 
-  p{
-    font-size: 18px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+                                      /* FILM SEARCH */
+  #filmSearch{
+    width:80%;
+    height:300px;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 2px dashed red;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: center;
   }
 
-  h3{
-    font-size: 25px;
-    color: #E8DDCB;
-    font-family: cursive;
+                                      /* FILM DETAIL */
+  #fullFilmSection{
+    text-align: center;
+    width:80%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #033649;
   }
+
+
+  .underligne{
+    text-decoration: underline;
+  }
+
+  #lien{
+    background-color: #f44336; /* Green */
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+  }
+
                                       /* SIGN UP */
   #inscriptionPage{
     background-color: rgb(3,101,100);

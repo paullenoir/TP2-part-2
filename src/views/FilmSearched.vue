@@ -21,21 +21,3 @@
         }
     }
 </script>
-
-<style lang="css">
-    #filmSearch{
-        width:80%;
-        height:300px;
-        margin-left: auto;
-        margin-right: auto;
-        border-top: 2px dashed red;
-        padding-bottom: 10px;
-        padding-top: 10px;
-        text-align: center;
-    }
-
-    img{
-        float:left;
-        width:150px;
-    }
-</style>
