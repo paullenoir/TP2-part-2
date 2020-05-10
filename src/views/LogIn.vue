@@ -32,9 +32,9 @@
     export default {
         data() {
             return {
-            name: '',
-            password:"",
-            submitStatus: null
+                name: '',
+                password:"",
+                submitStatus: null
             }
         },
         validations: {

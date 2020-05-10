@@ -19,11 +19,10 @@
             <div class="error" v-if="!$v.password.maxLength">Nom mot de passe doit avoir moins de {{$v.password.$params.maxLength.max}} lettres.</div>
 
             <div class="form-group" :class="{ 'form-group--error': $v.passwordConfirm.$error }">
-                <label class="form__label">Mot de passe: </label>
+                <label class="form__label">Mot de passe confirmation: </label>
                 <input class="form__input" v-model.trim="$v.passwordConfirm.$model"/>
             </div>
-            <div class="error" v-if="!$v.passwordConfirm.required">Le champs est requis</div>
-            <div class="error" v-if="!$v.passwordConfirm.maxLength">Le mot de passe doit avoir moins de {{$v.passwordConfirm.$params.maxLength.max}} lettres.</div>
+            <div class="error" v-if="!$v.passwordConfirm.sameAsPassword">Le mot de passe doit etre identique.</div>
 
             <div class="form-group" :class="{ 'form-group--error': $v.email.$error }">
                 <label class="form__label">Courriel: </label>
@@ -46,7 +45,7 @@
             <div class="error" v-if="!$v.lastName.required">Le champs est requis.</div>
             <div class="error" v-if="!$v.lastName.maxLength">Le prénom doit avoir moins de {{$v.lastName.$params.maxLength.max}} lettres.</div>
 
-            <button id="lien" class="button" type="submit" :disabled="submitStatus === 'PENDING'">S'inscrire</button>
+            <button id="lien" class="button" type="submit" :disabled="submitStatus === 'PENDING'" @click="signup()">S'inscrire</button>
             <p class="typo__p" v-if="submitStatus === 'OK'">Vous êtes inscrit</p>
             <p class="typo__p" v-if="submitStatus === 'ERROR'">Slp, remplir le champs correctement</p>
             <p class="typo__p" v-if="submitStatus === 'PENDING'">Envoi...</p>
@@ -55,8 +54,22 @@
 </template>
 
 <script>
-    import {required, minLength, maxLength, email} from 'vuelidate/lib/validators'
+    import {required, minLength, maxLength, email, sameAs} from 'vuelidate/lib/validators'
+    import axios from 'axios'
+
     export default {
+        data() {
+            return {
+                userName:"",
+                password:"",
+                passwordConfirm:"",
+                email:"",
+                firstName:"",
+                lastName:"",
+                role_id: 2,
+                submitStatus: null
+            }
+        },
         validations: {
             userName: {
                 required,
@@ -68,8 +81,7 @@
                 maxLength: maxLength(50)
             },
             passwordConfirm: {
-                required,
-                maxLength: maxLength(50)
+                sameAsPassword: sameAs('password')
             },
             email:{
                 required,
@@ -82,6 +94,25 @@
             lastName:{
                 required,
                 maxLength: maxLength(50)
+            }
+        },
+        methods:{
+            signup(){
+                axios.post('http://radiant-plains-67953.herokuapp.com/api/users', 
+                    { 
+                    params : { 
+                        login: this.userName,
+                        password: this.password,
+                        email: this.email,
+                        last_name: this.lastName,
+                        first_name: this.firstName,
+                        role_id: this.role_id
+                        }
+                    })
+                    .then(
+                        this.submitStatus = "OK"
+                        )
+                    .catch(this.submitStatus = "ERROR");
             }
         }
     }
