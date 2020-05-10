@@ -10,7 +10,6 @@ const apiClient = axios.create({
 })
 
 const RESSOURCE_FILM = 'films';
-const RESSOURCE_USERS = 'users';
 
 export default{
     getFirstFilms(){
@@ -30,10 +29,6 @@ export default{
     },
     getActorByFilmID(id){
         let fullUrl = RESSOURCE_FILM + "/" + id +"/actors";
-        return apiClient.get(fullUrl);
-    },
-    getUsersLogin(){
-        let fullUrl = RESSOURCE_USERS + "/login"
         return apiClient.get(fullUrl);
     }
 }

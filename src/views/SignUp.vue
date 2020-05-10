@@ -121,8 +121,8 @@
             }
         },
         mounted() {
-            if (localStorage.password) {
-                this.password = localStorage.password;
+            if (localStorage.userName) {
+                this.userName = localStorage.userName;
             }
             if (localStorage.password) {
                 this.password = localStorage.password;
