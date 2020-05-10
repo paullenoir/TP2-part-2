@@ -28,13 +28,15 @@
 
 <script>
     import { required, minLength, maxLength} from 'vuelidate/lib/validators'
+    import ApiServices from '../services/ApiServices.js';
 
     export default {
         data() {
             return {
                 name: '',
                 password:"",
-                submitStatus: null
+                submitStatus: null,
+                token:""
             }
         },
         validations: {
@@ -49,7 +51,10 @@
             }
         },
         submit() {
-            console.log('submit!')
+            ApiServices.getUsersLogin()
+                .then(response => {
+                    this.token = response.data;
+                })
             this.$v.$touch()
             if (this.$v.$invalid) {
                 this.submitStatus = 'ERROR'

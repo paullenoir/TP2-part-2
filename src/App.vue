@@ -4,7 +4,8 @@
     <nav>
       <router-link to="/"><span class="lienNav">Accueil</span></router-link>
       <router-link to="/signup"><span class="lienNav">S'inscrire</span></router-link>
-      <router-link to="/login"><span class="lienNav">Se connecter</span></router-link>
+      <router-link to="/login"><span class="lienNav" :class="{active: login}">Se connecter</span></router-link>
+      <router-link to="/login"><span class="lienNav" :class="{active: logout}">Se déconnecter</span></router-link>
     </nav>
     <hr>
     <router-view/>
@@ -18,6 +19,12 @@
 <script>
   export default {
     name: "App",
+    data(){
+      return{
+          login: false,
+          logout: true,
+      };
+      },
   }
 
 </script>
