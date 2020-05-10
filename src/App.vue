@@ -245,7 +245,7 @@
   }
 
                                       /* SIGN UP */ /* LOG IN */
-  #inscriptionPage, #connectionSection{
+  #inscriptionPage, #connectionSection, #inscriptionSection{
     background-color: rgb(3,101,100);
     padding: 15px;
     width:75%;
@@ -275,13 +275,13 @@
   }
 
                               /* LOG IN */
-  #connectionSection label{
+  #connectionSection label, #inscriptionSection label{
     color: white;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 18px;
   }
 
-  #connectionSection .error{
+  #connectionSection .error, #inscriptionSection .error{
     color:red;
     font-size: 16px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
