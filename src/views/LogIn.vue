@@ -35,7 +35,8 @@
                 userName: '',
                 password:"",
                 submitStatus: null,
-                token:""
+                token:"",
+                role_id:""
             }
         },
         validations: {
@@ -57,9 +58,11 @@
                 axios({method: "post",url:'http://radiant-plains-67953.herokuapp.com/api/users/login',
                     data : mesDonnees
                     })
-                    .then(response =>{this.token = response.data,
+                    .then(response =>{this.token = response.data.token,
+                                    this.role_id = response.data.role_id,
                                     this.submitStatus = "OK",
                                     console.log(this.submitStatus),
+                                    console.log(this.role_id),
                                     console.log(this.token)
                     })
                     .catch(
@@ -88,6 +91,9 @@
             },
             token(newtoken) {
                 localStorage.token = newtoken;
+            },
+            role_id(newRole_id) {
+                localStorage.role_id = newRole_id;
             }
         }
     }
