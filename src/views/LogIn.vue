@@ -32,11 +32,12 @@
     export default {
         data() {
             return {
-                userName: '',
+                userName:"",
                 password:"",
                 submitStatus: null,
                 token:"",
-                role_id:""
+                role_id:"",
+                prevRoute: null
             }
         },
         validations: {
@@ -61,9 +62,10 @@
                     .then(response =>{this.token = response.data.token,
                                     this.role_id = response.data.role_id,
                                     this.submitStatus = "OK",
-                                    console.log(this.submitStatus),
-                                    console.log(this.role_id),
-                                    console.log(this.token)
+                                    localStorage.login = false,
+                                    localStorage.logout = true,
+                                    localStorage.userNameApp = this.userName,
+                                    this.$router.go(-1)
                     })
                     .catch(
                         error =>{
@@ -95,6 +97,7 @@
             role_id(newRole_id) {
                 localStorage.role_id = newRole_id;
             }
+
         }
     }
 </script>

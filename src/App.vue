@@ -4,9 +4,11 @@
     <nav>
       <router-link to="/"><span class="lienNav">Accueil</span></router-link>
       <router-link to="/signup"><span class="lienNav">S'inscrire</span></router-link>
-      <router-link to="/login"><span class="lienNav" :class="{active: login}">Se connecter</span></router-link>
-      <router-link to="/login"><span class="lienNav" :class="{active: logout}">Se déconnecter</span></router-link>
+      <router-link to="/login"><span class="lienNav" v-if="login">Se connecter</span></router-link>
+      <router-link to="#"><span class="lienNav" v-if="logout" @click="deconnexion()">Se déconnecter</span></router-link>
+      <router-link to="/profil"><span class="lienNav" v-if="logout">Profil</span></router-link>
     </nav>
+    <span id="nomUtilisateur" v-if="logout">Nom d'utilisateur: {{userNameApp}}</span>
     <hr>
     <router-view/>
     <footer>
@@ -21,10 +23,55 @@
     name: "App",
     data(){
       return{
-          login: false,
-          logout: true,
+          login: true,
+          logout: false,
+          userNameApp: ""
       };
+    },
+    mounted() {
+      if (localStorage.login) {
+          this.login = localStorage.login;
+          console.log(this.login);
+      }
+      if (localStorage.logout) {
+          this.logout = localStorage.logout;
+      }
+      if (localStorage.userNameApp) {
+          this.userNameApp = localStorage.userNameApp;
+      }
+    },
+    watch: {
+        login(newLogin) {
+          localStorage.login = newLogin;
       },
+      logout(newLogout) {
+          localStorage.logout = newLogout;
+      },
+      '$route'(to, from) {
+        if (from.path === '/login') {
+          location.reload()
+        }
+      }
+    },
+    methods:{
+      deconnexion(){
+        this.login = true,
+        this.logout = false,
+        localStorage.login = "",
+        localStorage.logout = "",
+        localStorage.userName = "",
+        localStorage.password = "",
+        localStorage.userNameApp = "",
+        localStorage.token = "",
+        localStorage.role_id = "",
+        localStorage.userNameInscription = "",
+        localStorage.passwordInscription = "",
+        localStorage.passwordConfirm = "",
+        localStorage.email = "",
+        localStorage.firstName = "",
+        localStorage.lastName = ""
+      }
+    }
   }
 
 </script>
@@ -108,6 +155,14 @@
 
   router-link{
     text-decoration:none;
+  }
+
+  #nomUtilisateur{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 22px;
+    text-decoration:white;
+    margin-left: 50%;
+
   }
                                       /* ACCUEIL-INDEX */
   ul{

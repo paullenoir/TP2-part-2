@@ -2,21 +2,21 @@
     <div id="inscriptionPage">
         <h2>Page Inscription</h2>
         <div id="inscriptionSection">
-            <div class="form-group" :class="{ 'form-group--error': $v.userName.$error }">
+            <div class="form-group" :class="{ 'form-group--error': $v.userNameInscription.$error }">
                 <label class="form__label">Nom d'utilisateur: </label>
-                <input class="form__input" v-model="userName" v-model.trim="$v.userName.$model"/>
+                <input class="form__input" v-model="userNameInscription" v-model.trim="$v.userNameInscription.$model"/>
             </div>
-            <div class="error" v-if="!$v.userName.required">Le champs est requis</div>
-            <div class="error" v-if="!$v.userName.minLength">Nom d'utilisateur doit avoir plus de {{$v.userName.$params.minLength.min}} lettres.</div>
-            <div class="error" v-if="!$v.userName.maxLength">Nom d'utilisateur doit avoir moins de {{$v.userName.$params.maxLength.max}} lettres.</div>
+            <div class="error" v-if="!$v.userNameInscription.required">Le champs est requis</div>
+            <div class="error" v-if="!$v.userNameInscription.minLength">Nom d'utilisateur doit avoir plus de {{$v.userNameInscription.$params.minLength.min}} lettres.</div>
+            <div class="error" v-if="!$v.userNameInscription.maxLength">Nom d'utilisateur doit avoir moins de {{$v.userNameInscription.$params.maxLength.max}} lettres.</div>
                 
             
-            <div class="form-group" :class="{ 'form-group--error': $v.password.$error }">
+            <div class="form-group" :class="{ 'form-group--error': $v.passwordInscription.$error }">
                 <label class="form__label">Mot de passe: </label>
-                <input class="form__input" v-model="password" v-model.trim="$v.password.$model"/>
+                <input class="form__input" v-model="passwordInscription" v-model.trim="$v.passwordInscription.$model"/>
             </div>
-            <div class="error" v-if="!$v.password.required">Le champs est requis</div>
-            <div class="error" v-if="!$v.password.maxLength">Nom mot de passe doit avoir moins de {{$v.password.$params.maxLength.max}} lettres.</div>
+            <div class="error" v-if="!$v.passwordInscription.required">Le champs est requis</div>
+            <div class="error" v-if="!$v.passwordInscription.maxLength">Nom mot de passe doit avoir moins de {{$v.passwordInscription.$params.maxLength.max}} lettres.</div>
 
             <div class="form-group" :class="{ 'form-group--error': $v.passwordConfirm.$error }">
                 <label class="form__label">Mot de passe confirmation: </label>
@@ -59,8 +59,8 @@
     export default {
         data() {
             return {
-                userName:"",
-                password:"",
+                userNameInscription:"",
+                passwordInscription:"",
                 passwordConfirm:"",
                 email:"",
                 firstName:"",
@@ -70,12 +70,12 @@
             }
         },
         validations: {
-            userName: {
+            userNameInscription: {
                 required,
                 minLength: minLength(3),
                 maxLength: maxLength(50)
             },
-            password: {
+            passwordInscription: {
                 required,
                 maxLength: maxLength(50)
             },
@@ -98,8 +98,8 @@
         methods:{
             signup(){
                 var mesDonnees = new FormData();
-                mesDonnees.append("login",this.userName);
-                mesDonnees.append("password",this.password);
+                mesDonnees.append("login",this.userNameInscription);
+                mesDonnees.append("password",this.passwordInscription);
                 mesDonnees.append("email",this.email);
                 mesDonnees.append("last_name",this.lastName);
                 mesDonnees.append("first_name",this.firstName);
@@ -121,11 +121,11 @@
             }
         },
         mounted() {
-            if (localStorage.userName) {
-                this.userName = localStorage.userName;
+            if (localStorage.userNameInscription) {
+                this.userNameInscription = localStorage.userNameInscription;
             }
-            if (localStorage.password) {
-                this.password = localStorage.password;
+            if (localStorage.passwordInscription) {
+                this.passwordInscription = localStorage.passwordInscription;
             }
             if (localStorage.passwordConfirm) {
                 this.passwordConfirm = localStorage.passwordConfirm;
@@ -141,12 +141,7 @@
             }
         },
         watch: {
-            userName(newName) {
-                localStorage.userName = newName;
-            },
-            password(newPassword) {
-                localStorage.password = newPassword;
-            },
+
             passwordConfirm(newPasswordConfirm) {
                 localStorage.passwordConfirm = newPasswordConfirm;
             },
