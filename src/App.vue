@@ -4,11 +4,11 @@
     <nav>
       <router-link to="/"><span class="lienNav">Accueil</span></router-link>
       <router-link to="/signup"><span class="lienNav">S'inscrire</span></router-link>
-      <router-link to="/login"><span class="lienNav" v-if="login">Se connecter</span></router-link>
-      <router-link to="#"><span class="lienNav" v-if="logout" @click="deconnexion()">Se déconnecter</span></router-link>
-      <router-link to="/profil"><span class="lienNav" v-if="logout">Profil</span></router-link>
+      <router-link to="/login"><span class="lienNav" :class="{active1: login}">Se connecter</span></router-link>
+      <router-link to="#"><span class="lienNav" :class="{active2: logout}" @click="deconnexion()">Se déconnecter</span></router-link>
+      <router-link to="/profil"><span class="lienNav" :class="{active2: logout}">Profil</span></router-link>
     </nav>
-    <span id="nomUtilisateur" v-if="logout">Nom d'utilisateur: {{userNameApp}}</span>
+    <span id="nomUtilisateur" :class="{active2: logout}">Nom d'utilisateur: {{userNameApp}}</span>
     <hr>
     <router-view/>
     <footer>
@@ -23,8 +23,8 @@
     name: "App",
     data(){
       return{
-          login: true,
-          logout: false,
+          logout: true,
+          login: false,
           userNameApp: ""
       };
     },
@@ -49,14 +49,14 @@
       },
       '$route'(to, from) {
         if (from.path === '/login') {
-          location.reload()
+          this.$router.go()
         }
       }
     },
     methods:{
       deconnexion(){
-        this.login = true,
-        this.logout = false,
+        this.login = false,
+        this.logout = true,
         localStorage.login = "",
         localStorage.logout = "",
         localStorage.userName = "",
@@ -69,7 +69,10 @@
         localStorage.passwordConfirm = "",
         localStorage.email = "",
         localStorage.firstName = "",
-        localStorage.lastName = ""
+        localStorage.lastName = "",
+        this.$router.go("/"),
+        location.reload()
+        
       }
     }
   }
@@ -97,7 +100,13 @@
     width:100%;
     
   }
+  .active1{
+    visibility:hidden;
+  }
 
+  .active2{
+    visibility:hidden;
+  }
   h1{
     font-size: 45px;
     margin : 0;
