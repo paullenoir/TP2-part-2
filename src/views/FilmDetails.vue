@@ -1,27 +1,35 @@
 <template>
     <div id="fullFilmSection">
-        <h2>Description du film</h2>
-        <h3><span class="underligne">Titre:</span> <br>
-                {{films.title}}
-        </h3>
-        <img v-if="films.image != null" :src="films.image ? films.image : 'https://placeimg.com/200/200/tech'"/>
-        <p v-else>Image non disponible</p>
-        <p><span class="underligne">Synopsis:</span><br> {{films.description}}</p>
-        <p><span class="underligne">Durée:</span><br> {{Hours}}:{{Min}}</p>
-        <p><span class="underligne">Classement:</span><br> {{films.rating}}</p>
-        <p><span class="underligne">Année de parution:</span><br> {{films.release_year}}</p>
-        <p><span class="underligne">Acteur(s):</span></p>
-        <div v-if="Actors.length !== 0">
-           <ul>
-               <li v-for="actor in Actors" :key="actor.id">
-                   <p>{{actor.first_name}} {{actor.last_name}}</p>
-               </li>
-           </ul>
+        <div id="premiereSection">
+                <h2>Description du film</h2>
+                <h3><span class="underligne">Titre:</span> <br>
+                        {{films.title}}
+                </h3>
+                <img v-if="films.image != null" :src="films.image ? films.image : 'https://placeimg.com/200/200/tech'"/>
+                <p v-else>Image non disponible</p>
+                <p><span class="underligne">Synopsis:</span><br> {{films.description}}</p>
+                <p><span class="underligne">Durée:</span><br> {{Hours}}:{{Min}}</p>
+                <p><span class="underligne">Classement:</span><br> {{films.rating}}</p>
+                <p><span class="underligne">Année de parution:</span><br> {{films.release_year}}</p>
+                <p><span class="underligne">Acteur(s):</span></p>
+                <div v-if="Actors.length !== 0">
+                <ul>
+                <li v-for="actor in Actors" :key="actor.id">
+                        <p>{{actor.first_name}} {{actor.last_name}}</p>
+                </li>
+                </ul>
+                </div>
+                <p v-else>Aucun acteur pour ce film</p>
+                <p><span class="underligne">Score:</span></p>
+                <star-rating :value="Score" disabled="True"></star-rating>
+                <router-link to="/"><button id="lien">Return</button></router-link>
         </div>
-        <p v-else>Aucun acteur pour ce film</p>
-        <p><span class="underligne">Score:</span></p>
-        <star-rating :value="Score" disabled="True"></star-rating>
-        <router-link to="/"><button id="lien">Return</button></router-link>
+        <div id="deuxiemeSection" :class="{active2Section: token}">
+                <h2>Ajouter une critique</h2>
+        </div>
+        <div id="troisiemeSection" :class="{active3Section: token}">
+                <h2>Commentaires</h2>
+        </div>
     </div>
 </template>
 
@@ -58,7 +66,8 @@
                 Score:{
                     type:Number,
                     default:0
-                }
+                },
+                token: true
             };
                 },
                 created(){
@@ -93,5 +102,14 @@
 
                     },
                 },
+                mounted() {
+                        if (localStorage.token) {
+                                this.token = false;
+                                console.log(this.token);
+                        }
+                        else{
+                                this.token = true;
+                        }
+                }
         }
 </script>

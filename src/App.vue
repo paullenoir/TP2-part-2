@@ -23,18 +23,19 @@
     name: "App",
     data(){
       return{
-          logout: true,
           login: false,
+          logout: true,
           userNameApp: ""
       };
     },
     mounted() {
       if (localStorage.login) {
           this.login = localStorage.login;
-          console.log(this.login);
+          console.log(localStorage.login);
       }
       if (localStorage.logout) {
           this.logout = localStorage.logout;
+          console.log(localStorage.logout);
       }
       if (localStorage.userNameApp) {
           this.userNameApp = localStorage.userNameApp;
@@ -301,6 +302,14 @@
 
   .underligne{
     text-decoration: underline;
+  }
+
+  .active2Section{
+    visibility: hidden;
+  }
+
+  .active3Section{
+    visibility: hidden;
   }
 
   #lien{

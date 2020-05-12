@@ -62,8 +62,8 @@
                     .then(response =>{this.token = response.data.token,
                                     this.role_id = response.data.role_id,
                                     this.submitStatus = "OK",
-                                    localStorage.logout = false,
                                     localStorage.login = true,
+                                    localStorage.logout = false,
                                     localStorage.userNameApp = this.userName,
                                     this.$router.go(-1)
                     })
