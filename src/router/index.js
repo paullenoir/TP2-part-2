@@ -30,6 +30,13 @@ const routes = [
   },
   {
 
+    path:'/modifyFilm',
+    name: 'modifyFilm',
+    component: () => import('../views/modifyFilm.vue'),
+    props: castRouteParamsId
+},
+  {
+
       path:'/login',
       name: 'login',
       component: () => import('../views/LogIn.vue')

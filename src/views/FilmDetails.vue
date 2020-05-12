@@ -26,9 +26,35 @@
         </div>
         <div id="deuxiemeSection" :class="{active2Section: token}">
                 <h2>Ajouter une critique</h2>
+                <div id="formAddCritic">
+                        <div class="form-group" :class="{ 'form-group--error': $v.score.$error }">
+                                <label class="form__label">Score: </label>
+                                <input class="form__input" v-model="score" v-model.trim="$v.score.$model"/>
+                        </div>
+                        <div class="error" v-if="!$v.score.required">Le champs est requis</div>
+                        <div class="error" v-if="!$v.score.numeric">Le champs est un chiffre</div>
+                        <div class="error" v-if="!$v.score.maxValue">La valeur maximum est {{$v.score.$params.maxValue.max}}.</div>
+                        <div class="error" v-if="!$v.score.minValue">La valeur maximum est {{$v.score.$params.minValue.min}}.</div>
+
+                        <div class="form-group" :class="{ 'form-group--error': $v.comments.$error }">
+                                <label class="form__label">Commentaire: </label>
+                                <input class="form__input" v-model="comments" v-model.trim="$v.comments.$model" id="commentArea"/>
+                        </div>
+                        <div class="error" v-if="!$v.comments.required">Le champs est requis</div>
+                        <div class="error" v-if="!$v.comments.maxLength">Le champs doit faire moins de {{$v.comments.$params.maxLength.max}} caractères.</div>
+
+                        <button id="lien" class="button" type="submit"  @click="addCritic()">Ajouter</button>
+                        <p class="typo__p" v-if="submitStatus === 'OK'">Ajout efféctué</p>
+                        <p class="typo__p" v-if="submitStatus === 'ERROR'">Slp, remplir le champs correctement</p>
+                </div>
+                                
         </div>
         <div id="troisiemeSection" :class="{active3Section: token}">
                 <h2>Commentaires</h2>
+        </div>
+        <div id="quatriemeSection" :class="{active4Section: role_id}">
+                <h2>Modifier ou Supprimer un film</h2>
+                <button id="lien" @click="onSelect(this.films)">Formulaire</button>
         </div>
     </div>
 </template>
@@ -36,39 +62,57 @@
 <script>
         import ApiServices from '../services/ApiServices.js';
         import StarRating from "../components/StarRating";
+        import {required, numeric, maxValue, minValue, maxLength} from 'vuelidate/lib/validators'
+        import axios from 'axios'
 
         export default {
-            components: {StarRating},
-            props: {
-                id: {
-                    type: Number,
-                    default:0
-                }
-        },
-        data(){
-            return{
-                films:{
-                        type: Object,
-                        default: null
-                },
-                Actors:{
-                        type: Array,
-                        default: []
-                },
-                Hours:{
-                        type:Number,
+                components: {StarRating},
+                props: {
+                        id: {
+                        type: Number,
                         default:0
+                        }
                 },
-                Min:{
-                        type:Number,
-                        default:0
+                data(){
+                        return{
+                                films:{
+                                        type: Object,
+                                        default: null
+                                },
+                                Actors:{
+                                        type: Array,
+                                        default: []
+                                },
+                                Hours:{
+                                        type:Number,
+                                        default:0
+                                },
+                                Min:{
+                                        type:Number,
+                                        default:0
+                                },
+                                Score:{
+                                type:Number,
+                                default:0
+                                },
+                                token: true,
+                                role_id: true,
+                                score:0,
+                                comments:"",
+                                submitStatus: null
+                        };
                 },
-                Score:{
-                    type:Number,
-                    default:0
-                },
-                token: true
-            };
+                validations: {
+                        score: {
+                                required,
+                                numeric,
+                                maxValue: maxValue(5),
+                                minValue: minValue(0)
+                        },
+                        comments:{
+                                required,
+                                maxLength: maxLength(255)
+                        }
                 },
                 created(){
                         ApiServices.getFilmWithId(this.id)
@@ -93,14 +137,33 @@
                                 this.Hours = Math.floor(lengthOfMovie/60);
                                 this.Min = lengthOfMovie % 60;
                         },
-                    calculScore(critics){
-                            let score = 0;
-                            for(let i = 0; i < critics.length;i++){
+                        calculScore(critics){
+                                let score = 0;
+                                for(let i = 0; i < critics.length;i++){
                                 score += parseFloat(critics[i].score);
-                            }
-                            this.Score = ((score/critics.length)/100)*5;
+                                }
+                                this.Score = ((score/critics.length)/100)*5;
 
-                    },
+                        },
+                        onSelect(aFilm){
+                        this.$router.push({ name: "modifyFilm", params: { id: aFilm.id } });
+                        },
+                        addCritics(){
+                                var mesDonnees = new FormData();
+                                mesDonnees.append("user_id",localStorage.user_id);
+                                mesDonnees.append("film_id",this.films.id);
+                                mesDonnees.append("score",this.score);
+                                mesDonnees.append("comment",this.comment);
+                                axios({method: "post",url:'http://radiant-plains-67953.herokuapp.com/api/films/' + this.films.id + "/critics",
+                                data : mesDonnees
+                                })
+                                .then(this.submitStatus = "OK")
+                                .catch(error =>{
+                                        console.log('erreur de data : ', error.response),
+                                        this.submitStatus = "ERROR"
+                                        }
+                                );
+                        }
                 },
                 mounted() {
                         if (localStorage.token) {
@@ -109,6 +172,13 @@
                         }
                         else{
                                 this.token = true;
+                        }
+                        if (localStorage.role_id == 1) {
+                                this.role_id = false;
+                                console.log(this.role_id);
+                        }
+                        else{
+                                this.role_id = true;
                         }
                 }
         }

@@ -29,16 +29,22 @@
       };
     },
     mounted() {
-      if (localStorage.login) {
-          this.login = localStorage.login;
-          console.log(localStorage.login);
+      if (localStorage.login == "true") {
+          this.login = true;
       }
-      if (localStorage.logout) {
-          this.logout = localStorage.logout;
-          console.log(localStorage.logout);
+      else{
+        this.login = false;
+      }
+      if (localStorage.logout == "false") {
+          this.logout = false;
+      }
+      else{
+        this.logout = true;
       }
       if (localStorage.userNameApp) {
           this.userNameApp = localStorage.userNameApp;
+      }else{
+        this.userNameApp = ""
       }
     },
     watch: {
@@ -64,7 +70,7 @@
         localStorage.password = "",
         localStorage.userNameApp = "",
         localStorage.token = "",
-        localStorage.role_id = "",
+        localStorage.role_id = true,
         localStorage.userNameInscription = "",
         localStorage.passwordInscription = "",
         localStorage.passwordConfirm = "",
@@ -311,6 +317,9 @@
   .active3Section{
     visibility: hidden;
   }
+  .active4Section{
+    visibility: hidden;
+  }
 
   #lien{
     background-color: #f44336; 
@@ -324,8 +333,13 @@
     margin-top: 15px;
   }
 
+  #commentArea{
+    height: 100px;
+    width: 30%;
+  }
+
                                       /* SIGN UP */ /* LOG IN */
-  #inscriptionPage, #connectionSection, #inscriptionSection{
+  #inscriptionPage, #connectionSection, #inscriptionSection, #formAddCritic{
     background-color: rgb(3,101,100);
     padding: 15px;
     width:75%;
@@ -355,13 +369,13 @@
   }
 
                               /* LOG IN */
-  #connectionSection label, #inscriptionSection label{
+  #connectionSection label, #inscriptionSection label, #formAddCritic label{
     color: white;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 18px;
   }
 
-  #connectionSection .error, #inscriptionSection .error{
+  #connectionSection .error, #inscriptionSection .error, #formAddCritic .error{
     color:red;
     font-size: 16px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;

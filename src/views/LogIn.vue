@@ -36,7 +36,7 @@
                 password:"",
                 submitStatus: null,
                 token:"",
-                role_id:"",
+                role_id:0,
                 prevRoute: null
             }
         },
@@ -62,8 +62,10 @@
                     .then(response =>{this.token = response.data.token,
                                     this.role_id = response.data.role_id,
                                     this.submitStatus = "OK",
-                                    localStorage.login = true,
-                                    localStorage.logout = false,
+                                    localStorage.login = "true",
+                                    localStorage.logout = "false",
+                                    localStorage.role_id = 1,
+                                    localStorage.user_id = response.data.id,
                                     localStorage.userNameApp = this.userName,
                                     this.$router.go(-1)
                     })
