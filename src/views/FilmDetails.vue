@@ -24,6 +24,7 @@
                 <star-rating :value="Score" disabled="True"></star-rating>
                 <router-link to="/"><button id="lien">Return</button></router-link>
         </div>
+
         <div id="deuxiemeSection" :class="{active2Section: token}">
                 <h2>Ajouter une critique</h2>
                 <div id="formAddCritic">
@@ -49,8 +50,12 @@
                 </div>
                                 
         </div>
+
         <div id="troisiemeSection" :class="{active3Section: token}">
                 <h2>Commentaires</h2>
+                <li v-for="critic in critics" :key="critic.id">     
+                    <comments :critic="critic" v-if="isUserCritic(critic.id) != true"></comments>
+                </li>
         </div>
         <div id="quatriemeSection" :class="{active4Section: role_id}">
                 <h2>Modifier ou Supprimer un film</h2>
@@ -62,11 +67,16 @@
 <script>
         import ApiServices from '../services/ApiServices.js';
         import StarRating from "../components/StarRating";
+        import comments from '../views/comments.vue';
         import {required, decimal, maxValue, minValue, maxLength} from 'vuelidate/lib/validators'
         import axios from 'axios'
+        
 
         export default {
-                components: {StarRating},
+                components: {
+                        StarRating,
+                        comments
+                        },
                 props: {
                         id: {
                         type: Number,
@@ -105,7 +115,8 @@
                                         type: Object,
                                         default: null
                                 },
-                                hasCritic: false
+                                hasCritic: false,
+                                criticId:""
                         };
                 },
                 validations: {
@@ -182,6 +193,7 @@
                         makedCritic(user_id){
                                 for (let [key] of Object.entries(this.critics)) {
                                         if(this.critics[key].user_id == user_id){
+                                                this.criticId = this.critics[key].id
                                                 this.hasCritic = true;
                                                 this.fillForm(key);
                                         }
@@ -191,6 +203,13 @@
                         fillForm(key){
                                 this.comments = this.critics[key].comment;
                                 this.score = this.critics[key].score;
+                        },
+                        isUserCritic(aCriticId){
+                                let isSameCritic = false
+                                if(aCriticId == this.criticId){
+                                        isSameCritic = true
+                                }
+                                return isSameCritic
                         }
                 },
                 mounted() {

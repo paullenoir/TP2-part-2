@@ -338,6 +338,15 @@
     width: 30%;
   }
 
+  #troisiemeSection{
+    text-align: center;
+  }
+
+  #troisiemeSection li{
+    list-style-type: none;
+    border-top: 1px red dashed;
+  }
+
                                       /* SIGN UP */ /* LOG IN */
   #inscriptionPage, #connectionSection, #inscriptionSection, #formAddCritic{
     background-color: rgb(3,101,100);
