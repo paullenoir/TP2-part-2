@@ -7,6 +7,7 @@
       <router-link to="/login"><span class="lienNav" :class="{active1: login}">Se connecter</span></router-link>
       <router-link to="#"><span class="lienNav" :class="{active2: logout}" @click="deconnexion()">Se déconnecter</span></router-link>
       <router-link to="/profil"><span class="lienNav" :class="{active2: logout}">Profil</span></router-link>
+      <router-link to="/modifyFilm"><span class="lienNav" :class="{active3: isNotAdmin}">Film modification</span></router-link>
     </nav>
     <span id="nomUtilisateur" :class="{active2: logout}">Nom d'utilisateur: {{userNameApp}}</span>
     <hr>
@@ -25,35 +26,48 @@
       return{
           login: false,
           logout: true,
-          userNameApp: ""
+          userNameApp: "",
+          isNotAdmin: true
       };
     },
     mounted() {
       if (localStorage.login == "true") {
           this.login = true;
-          console.log("1-barre App");
       }
       else{
         this.login = false;
       }
+
       if (localStorage.logout == "false") {
           this.logout = false;
       }
       else{
         this.logout = true;
       }
+
       if (localStorage.userNameApp) {
           this.userNameApp = localStorage.userNameApp;
-      }else{
+      }
+      else{
         this.userNameApp = ""
+      }
+
+      if (localStorage.role_id != "1") {
+          this.isNotAdmin = true;
+      }
+      else{
+        this.isNotAdmin = false;
       }
     },
     watch: {
-        login(newLogin) {
+      login(newLogin) {
           localStorage.login = newLogin;
       },
       logout(newLogout) {
           localStorage.logout = newLogout;
+      },
+      isNotAdmin(newLogout) {
+          localStorage.isNotAdmin = newLogout;
       },
       '$route'(to, from) {
         if (from.path === '/login') {
@@ -65,8 +79,10 @@
       deconnexion(){
         this.login = false,
         this.logout = true,
+        this.isNotAdmin = true;
         localStorage.login = "",
         localStorage.logout = "",
+        localStorage.isNotAdmin = "",
         localStorage.userName = "",
         localStorage.password = "",
         localStorage.userNameApp = "",
@@ -115,6 +131,10 @@
   .active2{
     visibility:hidden;
   }
+
+  .active3{
+    visibility:hidden;
+  }
   h1{
     font-size: 45px;
     margin : 0;
@@ -148,7 +168,7 @@
 
 
   nav{
-    width:50%;
+    width:75%;
     text-decoration:none;
   }
 

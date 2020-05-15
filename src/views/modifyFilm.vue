@@ -59,7 +59,11 @@
             <div class="error" v-if="!$v.imageFilm.maxLength">Image doit avoir moins de {{$v.imageFilm.$params.maxLength.max}} lettres.</div>
            
 
-            <button id="lien" class="button" type="submit"  @click="getModification()">Modification</button>
+            <button id="lien" class="button" type="submit"  @click="getAjouter()">Ajouter</button>
+            <p class="typo__p" v-if="ajouterStatus === 'OK'">Ajouter ok</p>
+            <p class="typo__p" v-if="ajouterStatus === 'ERROR'">erreur Ajouter</p>
+
+            <button id="lien" class="button" type="submit"  @click="getModification()" style="margin-left:10px;">Modification</button>
             <p class="typo__p" v-if="ModificationStatus === 'OK'">Modification ok</p>
             <p class="typo__p" v-if="ModificationStatus === 'ERROR'">erreur modification</p>
 
@@ -72,7 +76,7 @@
 
 <script>
     import {required,minLength, maxLength, numeric} from 'vuelidate/lib/validators'
-    /* import axios from 'axios' */
+    import axios from 'axios' 
 
     export default {
         data(){
@@ -86,7 +90,9 @@
                 featuresFilm:"",
                 imageFilm:"",
                 ModificationStatus: "",
-                SuppressionStatus: ""
+                SuppressionStatus: "",
+                ajouterStatus: "",
+                filmId:""
             }
         },
         validations: {
@@ -124,7 +130,6 @@
             }
         },
         created(){
-                //this.film = this.$route.params.film;
                 this.titleFilm = this.$route.params.film.title
                 this.releaseFilm = this.$route.params.film.release_year
                 this.lengthFilm = this.$route.params.film.length
@@ -133,6 +138,103 @@
                 this.languageFilm = this.$route.params.film.language_id
                 this.featuresFilm = this.$route.params.film.special_features
                 this.imageFilm = this.$route.params.film.image
+                this.filmId = this.$route.params.film.id
+        },
+        methods:{
+            getAjouter(){
+                var mesDonnees = new FormData();
+                mesDonnees.append("title",this.titleFilm);
+                mesDonnees.append("release_year",this.releaseFilm);
+                mesDonnees.append("length",this.lengthFilm);
+                mesDonnees.append("description",this.descriptionFilm);
+                mesDonnees.append("rating",this.ratingFilm);
+                mesDonnees.append("language_id",this.languageFilm);
+                mesDonnees.append("special_features",this.featuresFilm);
+                mesDonnees.append("image",this.image);
+                var token = localStorage.token
+                axios({
+                        method: "post",
+                        url:'http://radiant-plains-67953.herokuapp.com/api/films',
+                        data : mesDonnees,
+                        header:{
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                            Authorization: "Bearer " + token
+                        }
+                    })
+                    .then(
+                        this.ajouterStatus = "OK",
+                        console.log(this.ajouterStatus)
+                        )
+                    .catch(
+                        error =>{
+                            console.log('erreur de data : ', error.response),
+                            this.ajouterStatus = "ERROR",
+                            console.log(this.ajouterStatus)
+                        }
+                    );
+            },
+            getModification(){
+                var mesDonnees = new FormData();
+                mesDonnees.append("title",this.titleFilm);
+                mesDonnees.append("release_year",this.releaseFilm);
+                mesDonnees.append("length",this.lengthFilm);
+                mesDonnees.append("description",this.descriptionFilm);
+                mesDonnees.append("rating",this.ratingFilm);
+                mesDonnees.append("language_id",this.languageFilm);
+                mesDonnees.append("special_features",this.featuresFilm);
+                mesDonnees.append("image",this.image);
+                var token = localStorage.token
+                axios({
+                        method: "put",
+                        url:'http://radiant-plains-67953.herokuapp.com/api/films/' + this.filmId,
+                        data : mesDonnees,
+                        header:{
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                            Authorization: "Bearer " + token
+                        }
+                    })
+                    .then(
+                        this.ModificationStatus = "OK",
+                        console.log(this.ModificationStatus)
+                        )
+                    .catch(
+                        error =>{
+                            console.log('erreur de data : ', error.response),
+                            this.ModificationStatus = "ERROR",
+                            console.log(this.ModificationStatus)
+                        }
+                    );
+            },
+            getSuppression(){
+                var token = localStorage.token
+                let config = {
+                        header:{
+                            common:{
+                                Accept: 'application/json',
+                                'Content-Type': 'application/json',
+                                Authorization: "Bearer " + token
+                            }
+                        }
+                }
+                axios({
+                    method: "delete",
+                    url:'http://radiant-plains-67953.herokuapp.com/api/films/' + this.filmId, 
+                    config
+                    })
+                    .then(
+                        this.SuppressionStatus = "OK",
+                        console.log(this.SuppressionStatus)
+                        )
+                    .catch(
+                        error =>{
+                            console.log('erreur de data : ', error.response),
+                            this.SuppressionStatus = "ERROR",
+                            console.log(this.SuppressionStatus)
+                        }
+                    );
+            }
         }
     }
 </script>
