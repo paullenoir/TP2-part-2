@@ -35,7 +35,7 @@
                         <div class="error" v-if="!$v.score.numeric">Le champs est un chiffre</div>
                         <div class="error" v-if="!$v.score.maxValue">La valeur maximum est {{$v.score.$params.maxValue.max}}.</div>
                         <div class="error" v-if="!$v.score.minValue">La valeur maximum est {{$v.score.$params.minValue.min}}.</div>
-
+                        <br>
                         <div class="form-group" :class="{ 'form-group--error': $v.comments.$error }">
                                 <label class="form__label">Commentaire: </label>
                                 <input class="form__input" v-model="comments" v-model.trim="$v.comments.$model" id="commentArea"/>
@@ -43,8 +43,8 @@
                         <div class="error" v-if="!$v.comments.required">Le champs est requis</div>
                         <div class="error" v-if="!$v.comments.maxLength">Le champs doit faire moins de {{$v.comments.$params.maxLength.max}} caractères.</div>
 
-                        <button id="lien" class="button" type="submit"  @click="addCritic()">Ajouter</button>
-                        <p class="typo__p" v-if="submitStatus === 'OK'">Ajout efféctué</p>
+                        <button id="lien" class="button" type="submit"  @click="addCritic()">{{textButton}}</button>
+                        <p class="typo__p" v-if="submitStatus === 'OK'">{{textButton}} efféctué</p>
                         <p class="typo__p" v-if="submitStatus === 'ERROR'">Slp, remplir le champs correctement</p>
                 </div>
                                 
@@ -95,11 +95,17 @@
                                 type:Number,
                                 default:0
                                 },
+                                textButton: "Ajouter",
                                 token: true,
                                 role_id: true,
                                 score:0,
                                 comments:"",
-                                submitStatus: null
+                                submitStatus: null,
+                                critics:{
+                                        type: Object,
+                                        default: null
+                                },
+                                hasCritic: false
                         };
                 },
                 validations: {
@@ -120,6 +126,7 @@
                                         this.films = response.data['film'];
                                         this.changeLengthToHours(this.films.length);
                                         this.calculScore(response.data['critic'])
+                                        console.log("getFilmWithId: " + response.data)
                                 })
                                 .catch(error =>{
                                         console.log('Erreur de data : ', error.response)
@@ -127,6 +134,18 @@
                         ApiServices.getActorByFilmID(this.id)
                                 .then(response => {
                                         this.Actors = response.data;
+                                })
+                                .catch(error =>{
+                                        console.log('Erreur de data : ', error.response)
+                                });
+                        ApiServices.getFilmWithId(this.id)
+                                .then(response =>{
+                                        this.critics = response.data['critic'];
+                                        this.makedCritic(localStorage.user_id);
+                                        if(this.hasCritic){
+                                            this.fillForm();                 
+                                        }
+
                                 })
                                 .catch(error =>{
                                         console.log('Erreur de data : ', error.response)
@@ -163,9 +182,21 @@
                                         this.submitStatus = "ERROR"
                                         }
                                 );
+                        },
+                        makedCritic(user_id){
+                                for (let [key] of Object.entries(this.critics)) {
+                                        if(this.critics[key].user_id == user_id){
+                                                this.hasCritic = true
+                                        }
+                                        
+                                }
+                        },
+                        fillForm(){
+                                
                         }
                 },
                 mounted() {
+
                         if (localStorage.token) {
                                 this.token = false;
                                 console.log(this.token);
@@ -179,6 +210,11 @@
                         }
                         else{
                                 this.role_id = true;
+                        }
+                },
+                watch: {
+                        hasCritic: function(){
+                                return this.textButton = "Modifier"
                         }
                 }
         }
