@@ -31,6 +31,7 @@
     mounted() {
       if (localStorage.login == "true") {
           this.login = true;
+          console.log("1-barre App");
       }
       else{
         this.login = false;

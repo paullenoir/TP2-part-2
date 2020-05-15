@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="index">
         <input id="searchBar" type="text" placeholder=" Recherche ..." v-model="filterName">
         <ul v-if="filterName.length < 3" class="films" >
             <h2>Les 3 derniers films ajoutés</h2>
@@ -41,6 +41,7 @@
     import FilmsList from "../views/FilmsList";
 
     export default {
+        name: "index",
         data() {
             return {
                 films: [],
@@ -63,6 +64,7 @@
                 .then(response => {
                     this.films = response.data;
                     this.lastFilm();
+                    console.log("2-page index");
                 })
                 .then(() => {
                     ApiServices.getLastFilm(this.lastPage)
