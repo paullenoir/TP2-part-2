@@ -32,7 +32,7 @@
                                 <input class="form__input" v-model="score" v-model.trim="$v.score.$model"/>
                         </div>
                         <div class="error" v-if="!$v.score.required">Le champs est requis</div>
-                        <div class="error" v-if="!$v.score.numeric">Le champs est un chiffre</div>
+                        <div class="error" v-if="!$v.score.decimal">Le champs est un chiffre</div>
                         <div class="error" v-if="!$v.score.maxValue">La valeur maximum est {{$v.score.$params.maxValue.max}}.</div>
                         <div class="error" v-if="!$v.score.minValue">La valeur maximum est {{$v.score.$params.minValue.min}}.</div>
                         <br>
@@ -62,7 +62,7 @@
 <script>
         import ApiServices from '../services/ApiServices.js';
         import StarRating from "../components/StarRating";
-        import {required, numeric, maxValue, minValue, maxLength} from 'vuelidate/lib/validators'
+        import {required, decimal, maxValue, minValue, maxLength} from 'vuelidate/lib/validators'
         import axios from 'axios'
 
         export default {
@@ -111,8 +111,8 @@
                 validations: {
                         score: {
                                 required,
-                                numeric,
-                                maxValue: maxValue(5),
+                                decimal,
+                                maxValue: maxValue(100),
                                 minValue: minValue(0)
                         },
                         comments:{
@@ -142,10 +142,6 @@
                                 .then(response =>{
                                         this.critics = response.data['critic'];
                                         this.makedCritic(localStorage.user_id);
-                                        if(this.hasCritic){
-                                            this.fillForm();                 
-                                        }
-
                                 })
                                 .catch(error =>{
                                         console.log('Erreur de data : ', error.response)
@@ -165,7 +161,7 @@
 
                         },
                         onSelect(aFilm){
-                        this.$router.push({ name: "modifyFilm", params: { id: aFilm.id } });
+                                this.$router.push({ name: "modifyFilm", params: { id: aFilm.id } });
                         },
                         addCritics(){
                                 var mesDonnees = new FormData();
@@ -186,13 +182,15 @@
                         makedCritic(user_id){
                                 for (let [key] of Object.entries(this.critics)) {
                                         if(this.critics[key].user_id == user_id){
-                                                this.hasCritic = true
+                                                this.hasCritic = true;
+                                                this.fillForm(key);
                                         }
                                         
                                 }
                         },
-                        fillForm(){
-                                
+                        fillForm(key){
+                                this.comments = this.critics[key].comment;
+                                this.score = this.critics[key].score;
                         }
                 },
                 mounted() {
