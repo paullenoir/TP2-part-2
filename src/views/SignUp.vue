@@ -141,7 +141,6 @@
             }
         },
         watch: {
-
             passwordConfirm(newPasswordConfirm) {
                 localStorage.passwordConfirm = newPasswordConfirm;
             },

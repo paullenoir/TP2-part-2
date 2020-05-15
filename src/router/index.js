@@ -33,7 +33,7 @@ const routes = [
     path:'/modifyFilm',
     name: 'modifyFilm',
     component: () => import('../views/modifyFilm.vue'),
-    props: castRouteParamsId
+    props: castRouteParamsFilm
 },
   {
 
@@ -45,6 +45,12 @@ const routes = [
     function castRouteParamsId(route) {
         return {
             id: Number(route.params.id),
+        };
+    }
+
+    function castRouteParamsFilm(route) {
+        return {
+            film: route.params.film
         };
     }
 const router = new VueRouter({

@@ -53,13 +53,22 @@
 
         <div id="troisiemeSection" :class="{active3Section: token}">
                 <h2>Commentaires</h2>
-                <li v-for="critic in critics" :key="critic.id">     
-                    <comments :critic="critic" v-if="isUserCritic(critic.id) != true"></comments>
-                </li>
+                <div  class="flex-container">
+                        <li v-for="(critic, index) in critics" :key="critic.id">  
+                                <div id="criticLeft" v-if="index % 2 === 0">
+                                        <comments :critic="critic" v-if="isUserCritic(critic.id) != true"></comments>
+                                </div>
+                                <div id="criticRight" v-if="index % 2 !== 0">
+                                        <comments :critic="critic" v-if="isUserCritic(critic.id) != true"></comments>
+                                </div>
+                                <br>
+                        </li>
+                </div>
         </div>
+        <br>
         <div id="quatriemeSection" :class="{active4Section: role_id}">
                 <h2>Modifier ou Supprimer un film</h2>
-                <button id="lien" @click="onSelect(this.films)">Formulaire</button>
+                <button id="lien" @click="onSelect()">Formulaire</button>
         </div>
     </div>
 </template>
@@ -74,15 +83,15 @@
 
         export default {
                 components: {
-                        StarRating,
-                        comments
+                                StarRating,
+                                comments
                         },
                 props: {
-                        id: {
-                        type: Number,
-                        default:0
-                        }
-                },
+                                id: {
+                                type: Number,
+                                default:0
+                                }
+                        },
                 data(){
                         return{
                                 films:{
@@ -157,6 +166,7 @@
                                 .catch(error =>{
                                         console.log('Erreur de data : ', error.response)
                                 });
+
                 },
                 methods:{
                         changeLengthToHours(lengthOfMovie){
@@ -170,9 +180,6 @@
                                 }
                                 this.Score = ((score/critics.length)/100)*5;
 
-                        },
-                        onSelect(aFilm){
-                                this.$router.push({ name: "modifyFilm", params: { id: aFilm.id } });
                         },
                         addCritics(){
                                 var mesDonnees = new FormData();
@@ -210,6 +217,9 @@
                                         isSameCritic = true
                                 }
                                 return isSameCritic
+                        },
+                        onSelect(){
+                                this.$router.push({ name: "modifyFilm", params: { film: this.films } });
                         }
                 },
                 mounted() {

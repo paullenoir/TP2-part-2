@@ -341,15 +341,34 @@
 
   #troisiemeSection{
     text-align: center;
+    width:50%;
+    margin-left: 25%;
   }
 
   #troisiemeSection li{
     list-style-type: none;
-    border-top: 1px red dashed;
   }
 
+  .flex-container{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .flex-container > li{
+      text-align: center;
+  }
+
+  #criticLeft{
+    float:left;
+  }
+
+  #criticRight{
+    float:right;
+  }
+
+
                                       /* SIGN UP */ /* LOG IN */
-  #inscriptionPage, #connectionSection, #inscriptionSection, #formAddCritic{
+  #inscriptionPage, #connectionSection, #inscriptionSection, #formAddCritic, #filmForm{
     background-color: rgb(3,101,100);
     padding: 15px;
     width:75%;
@@ -379,13 +398,13 @@
   }
 
                               /* LOG IN */
-  #connectionSection label, #inscriptionSection label, #formAddCritic label{
+  #connectionSection label, #inscriptionSection label, #formAddCritic label, #filmForm label{
     color: white;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 18px;
   }
 
-  #connectionSection .error, #inscriptionSection .error, #formAddCritic .error{
+  #connectionSection .error, #inscriptionSection .error, #formAddCritic .error, #filmForm .error{
     color:red;
     font-size: 16px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
