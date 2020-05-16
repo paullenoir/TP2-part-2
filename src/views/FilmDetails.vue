@@ -1,7 +1,7 @@
 <template>
     <div id="fullFilmSection">
+        <h2>Description du film</h2>
         <div id="premiereSection">
-                <h2>Description du film</h2>
                 <h3><span class="underligne">Titre:</span> <br>
                         {{films.title}}
                 </h3>
@@ -51,24 +51,22 @@
                                 
         </div>
 
+        <h2>Commentaires</h2>
         <div id="troisiemeSection" :class="{active3Section: token}">
-                <h2>Commentaires</h2>
+                
                 <div  class="flex-container">
-                        <li v-for="(critic, index) in critics" :key="critic.id">  
-                                <div id="criticLeft" v-if="index % 2 === 0">
+                        <li v-for="(critic) in critics" :key="critic.id">  
+                                <div id="essai">
                                         <comments :critic="critic" v-if="isUserCritic(critic.id) != true"></comments>
                                 </div>
-                                <div id="criticRight" v-if="index % 2 !== 0">
-                                        <comments :critic="critic" v-if="isUserCritic(critic.id) != true"></comments>
-                                </div>
-                                <br>
+
                         </li>
                 </div>
         </div>
         <br>
         <div id="quatriemeSection" :class="{active4Section: role_id}">
                 <h2>Modifier ou Supprimer un film</h2>
-                <button id="lien" @click="onSelect()">Formulaire</button>
+                <button id="lien" @click="onSelect()" style="margin-bottom:30px;">Formulaire</button>
         </div>
     </div>
 </template>

@@ -1,0 +1,44 @@
+filmDetails
+    2eme section
+        Vote : j'ai mi sun score entre 0 et 100 mais je pense que la prof veut les etoiles.
+                Je ne comprend pas ta template de creation des étoiles DONC JE TE LAISSE REFAIRE CE BOUT
+    3eme section
+        les commentaires viennent de la page comments.vue
+        Dans comments.vue
+            Je n'arrive pas aller chercher le nom avec mon get. PEUX TU REGARDER
+
+modifyFilm (accessible seulement si admin)
+    pour la ligne classement du formulaire, il faut faire une liste deroule
+        les données de la liste doivent provenir de la BD
+        JE TE LAISSE LE FAIRE
+
+signup
+    Je n'ai pas regardé comment faire la validation pour que le nom utilisateur soit unique
+        (je pense qu'il faut faire un axios a la BD et checker tous les users)
+        JE TE LAISSE LE FAIRE
+    Il manque le Ajax pour faire la vérid de l'existance du nom utilisateur dans la BD a partir du 3eme char
+        JE TE LAISSE LE FAIRE
+
+profil
+    quand tu te connecte en mode admin (user: admin, pwd: admin), tu vois dans le header l'onglet profil
+    Ce lien doit retourner a la page signup, je pense ou tu en fais une autre
+    + remplir les champs automatiquements
+    + boutton modification (avec id='lien' pour le css)
+    A FAIRE
+
+
+**************************************************************
+modifyFilm  
+    les 3 boutons ne fonctionnent pas, j'ai un code 401 mais je ne comprend pas
+    j'ai demandé à la prof de regarder et elle me dit que le id n'est pas passé mais c'est faux
+    PEUX TU REGARDER POURQUOI, si tu trouve je pense que c'est le meme probleme que pour aller chercher les nom dans comments.vue
+
+
+Dès que la prof me redonne des news sur mon pb de axios je te ferais suivre le message.
+
+Je pense regarder ce tp jeudi prochain pour le finaliser (css et voir notre pb de MAJ de index.vue)
+
+Si tu penses que le travail n'est pas équitable en ta défaveur, n'hésite pas à m'en faire part mais je pense que j'ai fais la mienne.
+Si tu as des pb, je suis la. On est une équipe
+
+Moi je vais faire systeme et bd car je suis en retard

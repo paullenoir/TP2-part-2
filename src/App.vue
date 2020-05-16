@@ -370,25 +370,15 @@
   }
 
   .flex-container{
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: auto auto;
   }
 
-  .flex-container > li{
-      text-align: center;
-  }
 
-  #criticLeft{
-    float:left;
-  }
-
-  #criticRight{
-    float:right;
-  }
 
 
                                       /* SIGN UP */ /* LOG IN */
-  #inscriptionPage, #connectionSection, #inscriptionSection, #formAddCritic, #filmForm{
+  #inscriptionPage, #connectionSection, #inscriptionSection, #formAddCritic, #filmForm, #premiereSection, #troisiemeSection{
     background-color: rgb(3,101,100);
     padding: 15px;
     width:75%;

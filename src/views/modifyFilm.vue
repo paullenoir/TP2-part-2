@@ -185,9 +185,8 @@
                 mesDonnees.append("special_features",this.featuresFilm);
                 mesDonnees.append("image",this.image);
                 var token = localStorage.token
-                axios({
-                        method: "put",
-                        url:'http://radiant-plains-67953.herokuapp.com/api/films/' + this.filmId,
+                axios({method: "put",
+                        url:'http://radiant-plains-67953.herokuapp.com/api/films/' + this.$route.params.film.id,
                         data : mesDonnees,
                         header:{
                             Accept: 'application/json',
@@ -220,7 +219,7 @@
                 }
                 axios({
                     method: "delete",
-                    url:'http://radiant-plains-67953.herokuapp.com/api/films/' + this.filmId, 
+                    url:'http://radiant-plains-67953.herokuapp.com/api/films/' + this.$route.params.film.id, 
                     config
                     })
                     .then(

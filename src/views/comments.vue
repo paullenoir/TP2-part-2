@@ -2,6 +2,7 @@
     <div>
         <p>Commentaire: {{this.critic.comment}}</p> 
         <p>Nom du membre: {{userName}}</p> 
+        <hr>
     </div>
 </template>
 
@@ -17,11 +18,13 @@
         },
         data(){
             return{
-                userName: ""
+                userName: "",
+                user_id:""
             }
         },
         created(){
-            ApiServices.getUserById(this.critic.user_id)
+            this.user_id = this.critic.user_id;
+            ApiServices.getUserById(this.user_id)
                 .then(response => {
                     this.userName = response.data;
                     console.log("reponse:" + response.data);

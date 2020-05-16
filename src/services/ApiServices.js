@@ -35,6 +35,7 @@ export default{
     },
     getUserById(id){
         let fullUrl = "users/" + id;
+        console.log("page apiservice " + id)
         return apiClient.get(fullUrl);
     }
 }
