@@ -1,15 +1,12 @@
 import axios from 'axios'
 
-var token = localStorage.token
-
 const apiClient = axios.create({
     baseURL: 'http://radiant-plains-67953.herokuapp.com/api/',
     header:{
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: "Bearer " + token
     }
-})
+});
 
 const RESSOURCE_FILM = 'films';
 
@@ -33,9 +30,14 @@ export default{
         let fullUrl = RESSOURCE_FILM + "/" + id +"/actors";
         return apiClient.get(fullUrl);
     },
-    getUserById(id){
+    getUserById(id){//Retourne tjrs 401
         let fullUrl = "users/" + id;
-        console.log("page apiservice " + id)
+        console.log("page apiservice " + id);
+        apiClient.header= {Authorization: "Bearer " + localStorage.token};
+        return apiClient.get(fullUrl);
+    },
+    getRatingChoice(){
+        let fullUrl = "ratings";
         return apiClient.get(fullUrl);
     }
 }

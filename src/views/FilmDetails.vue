@@ -144,7 +144,6 @@
                                         this.films = response.data['film'];
                                         this.changeLengthToHours(this.films.length);
                                         this.calculScore(response.data['critic'])
-                                        console.log("getFilmWithId: " + response.data)
                                 })
                                 .catch(error =>{
                                         console.log('Erreur de data : ', error.response)
@@ -217,7 +216,7 @@
                                 return isSameCritic
                         },
                         onSelect(){
-                                this.$router.push({ name: "modifyFilm", params: { film: this.films } });
+                                this.$router.push({ name: "modifyFilm", params: { film: this.films, isPass: true  } });
                         }
                 },
                 mounted() {
