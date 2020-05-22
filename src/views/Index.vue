@@ -4,7 +4,7 @@
         <ul v-if="filterName.length < 3" class="films" >
             <h2>Les 3 derniers films ajoutés</h2>
             <li v-for="film in filterFilm" :key="film.id">
-                <FilmsList :film="film"></FilmsList>
+                <Films-List :film="film"></Films-List>
             </li>
         </ul>
         <ul v-else>

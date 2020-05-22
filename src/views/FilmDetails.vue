@@ -33,7 +33,6 @@
                                 <input class="form__input" v-model="score" v-model.trim="$v.score.$model"/>
                         </div>
                         <div class="error" v-if="!$v.score.required">Le champs est requis</div>
-                        <div class="error" v-if="!$v.score.decimal">Le champs est un chiffre</div>
                         <div class="error" v-if="!$v.score.maxValue">La valeur maximum est {{$v.score.$params.maxValue.max}}.</div>
                         <div class="error" v-if="!$v.score.minValue">La valeur maximum est {{$v.score.$params.minValue.min}}.</div>
                         <br>
