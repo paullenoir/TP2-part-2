@@ -32,8 +32,7 @@ export default{
     },
     getUserById(id){//Retourne tjrs 401
         let fullUrl = "users/" + id;
-        console.log("page apiservice " + id);
-        apiClient.header= {Authorization: "Bearer " + localStorage.token};
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
         return apiClient.get(fullUrl);
     },
     getRatingChoice(){

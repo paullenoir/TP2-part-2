@@ -64,7 +64,6 @@
                 .then(response => {
                     this.films = response.data;
                     this.lastFilm();
-                    console.log("2-page index");
                 })
                 .then(() => {
                     ApiServices.getLastFilm(this.lastPage)

@@ -3,10 +3,9 @@
     <h1>Bienvenue à VideoLy</h1>
     <nav>
       <router-link to="/"><span class="lienNav">Accueil</span></router-link>
-      <router-link to="/signup"><span class="lienNav">S'inscrire</span></router-link>
+      <router-link to="/signup"><span class="lienNav">S'inscrire/Profil</span></router-link>
       <router-link to="/login"><span class="lienNav" :class="{active1: login}">Se connecter</span></router-link>
       <router-link to="#"><span class="lienNav" :class="{active2: logout}" @click="deconnexion()">Se déconnecter</span></router-link>
-      <router-link to="/profil"><span class="lienNav" :class="{active2: logout}">Profil</span></router-link>
       <span @click="goToModify()" class="lienNav" :class="{active3: isNotAdmin}">Film modification</span>
     </nav>
     <span id="nomUtilisateur" :class="{active2: logout}">Nom d'utilisateur: {{userNameApp}}</span>
@@ -94,6 +93,7 @@
         localStorage.email = "",
         localStorage.firstName = "",
         localStorage.lastName = "",
+        localStorage.user_id = "",
         this.$router.go("/"),
         location.reload()
       },
