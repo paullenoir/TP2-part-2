@@ -15,7 +15,7 @@
                 <h2>Films recherches :{{paginatedFilms.length}}</h2>
                 <li v-for="film in paginatedFilms" :key="film.id">
                     <FilmSearched :film="film"></FilmSearched>
-                </li>
+            </li>
 
                 <ul v-if="pageNumber !== 1">
                     <button class="beforeButton" @click="pageNumber -= 1">Before</button>

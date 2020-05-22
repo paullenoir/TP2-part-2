@@ -34,7 +34,9 @@
 
             <div class="form-group" :class="{ 'form-group--error': $v.ratingFilm.$error }">
                 <label class="form__label">Classement:</label>
-                <input class="form__input" v-model="ratingFilm" v-model.trim="$v.ratingFilm.$model"/>
+                <select v-model="ratingSelected">
+                    <option v-for="rating in ratingFilm" :key="rating.id" :value="rating" >{{rating}}</option>
+                </select>
             </div>
             <div class="error" v-if="!$v.ratingFilm.required">Le champs est requis.</div>
 
@@ -59,15 +61,15 @@
             <div class="error" v-if="!$v.imageFilm.maxLength">Image doit avoir moins de {{$v.imageFilm.$params.maxLength.max}} lettres.</div>
            
 
-            <button id="lien" class="button" type="submit"  @click="getAjouter()">Ajouter</button>
+            <button v-if="!IsPass" id="lien" class="button" type="submit"  @click="getAjouter()">Ajouter</button>
             <p class="typo__p" v-if="ajouterStatus === 'OK'">Ajouter ok</p>
             <p class="typo__p" v-if="ajouterStatus === 'ERROR'">erreur Ajouter</p>
 
-            <button id="lien" class="button" type="submit"  @click="getModification()" style="margin-left:10px;">Modification</button>
+            <button v-if='IsPass' id="lien" class="button" type="submit"  @click="getModification()" style="margin-left:10px;">Modification</button>
             <p class="typo__p" v-if="ModificationStatus === 'OK'">Modification ok</p>
             <p class="typo__p" v-if="ModificationStatus === 'ERROR'">erreur modification</p>
 
-            <button id="lien" class="button" type="submit"  @click="getSuppression()" style="margin-left:10px;">Suppression</button>
+            <button v-if='IsPass' id="lien" class="button" type="submit"  @click="getSuppression()" style="margin-left:10px;">Suppression</button>
             <p class="typo__p" v-if="SuppressionStatus === 'OK'">Suppression ok</p>
             <p class="typo__p" v-if="SuppressionStatus === 'ERROR'">erreur suppression</p>
         </div>
@@ -76,7 +78,8 @@
 
 <script>
     import {required,minLength, maxLength, numeric} from 'vuelidate/lib/validators'
-    import axios from 'axios' 
+    import axios from 'axios'
+    import ApiServices from "../services/ApiServices";
 
     export default {
         data(){
@@ -85,14 +88,16 @@
                 releaseFilm:"",
                 lengthFilm: 0,
                 descriptionFilm: "",
-                ratingFilm: "",
+                ratingFilm: [],
+                ratingSelected:"",
                 languageFilm: 0,
                 featuresFilm:"",
                 imageFilm:"",
                 ModificationStatus: "",
                 SuppressionStatus: "",
                 ajouterStatus: "",
-                filmId:""
+                filmId:"",
+                IsPass:false
             }
         },
         validations: {
@@ -130,15 +135,26 @@
             }
         },
         created(){
-                this.titleFilm = this.$route.params.film.title
-                this.releaseFilm = this.$route.params.film.release_year
-                this.lengthFilm = this.$route.params.film.length
-                this.descriptionFilm = this.$route.params.film.description
-                this.ratingFilm = this.$route.params.film.rating
-                this.languageFilm = this.$route.params.film.language_id
-                this.featuresFilm = this.$route.params.film.special_features
-                this.imageFilm = this.$route.params.film.image
-                this.filmId = this.$route.params.film.id
+                this.titleFilm = this.$route.params.film.title;
+                this.releaseFilm = this.$route.params.film.release_year;
+                this.lengthFilm = this.$route.params.film.length;
+                this.descriptionFilm = this.$route.params.film.description;
+                this.languageFilm = this.$route.params.film.language_id;
+                this.featuresFilm = this.$route.params.film.special_features;
+                this.imageFilm = this.$route.params.film.image;
+                this.filmId = this.$route.params.film.id;
+                this.IsPass = this.$route.params.isPass;
+                this.ratingSelected = this.$route.params.film.rating;
+            ApiServices.getRatingChoice()
+                .then(response => {
+                    for(var i = 0; i < response.data.length; i++){
+                        console.log(response.data[i]['name']);
+                        this.ratingFilm.push(response.data[i]['name']);
+                    }
+                })
+                .catch(error =>{
+                    console.log('Erreur de data : ', error.response)
+                });
         },
         methods:{
             getAjouter(){

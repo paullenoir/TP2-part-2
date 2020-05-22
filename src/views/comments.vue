@@ -23,6 +23,7 @@
             }
         },
         created(){
+            console.log(localStorage.token);
             this.user_id = this.critic.user_id;
             ApiServices.getUserById(this.user_id)
                 .then(response => {
