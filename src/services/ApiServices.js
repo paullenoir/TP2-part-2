@@ -30,7 +30,7 @@ export default{
         let fullUrl = RESSOURCE_FILM + "/" + id +"/actors";
         return apiClient.get(fullUrl);
     },
-    getUserById(id){//Retourne tjrs 401
+    getUserById(id){
         let fullUrl = "users/" + id;
         apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
         return apiClient.get(fullUrl);
