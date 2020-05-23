@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import ApiServices from '../services/ApiServices.js';
+    import axios from 'axios'
 
     export default {
         props: {
@@ -23,16 +23,23 @@
             }
         },
         created(){
-            console.log(localStorage.token);
             this.user_id = this.critic.user_id;
-            ApiServices.getUserById(this.user_id)
-                .then(response => {
-                    this.userName = response.data;
-                    console.log("reponse:" + response.data);
-                })
-                .catch(error =>{
-                    console.log('erreur de data : ', error.response)
-                })
+            let URL = 'http://radiant-plains-67953.herokuapp.com/api/users/' + this.user_id
+            let config = {'headers': { 
+                                'Accept': 'application/json', 
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + localStorage.token
+                                } 
+                        }
+            axios.get(URL, config)
+                    .then(response => {
+                    console.log(response.data);
+                    })
+                    .catch(
+                        error =>{
+                            console.log(error);
+                        }
+                    );
         }
     }
 </script>

@@ -4,7 +4,7 @@ const apiClient = axios.create({
     baseURL: 'http://radiant-plains-67953.herokuapp.com/api/',
     header:{
         Accept: 'application/json',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
     }
 });
 

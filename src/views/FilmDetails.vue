@@ -49,10 +49,9 @@
                 </div>
                                 
         </div>
-
-        <h2>Commentaires</h2>
+        <hr>
         <div id="troisiemeSection" :class="{active3Section: token}">
-                
+                <h2>Commentaires</h2>
                 <div  class="flex-container">
                         <li v-for="(critic) in critics" :key="critic.id">  
                                 <div id="essai">
@@ -222,7 +221,6 @@
 
                         if (localStorage.token) {
                                 this.token = false;
-                                console.log(this.token);
                         }
                         else{
                                 this.token = true;

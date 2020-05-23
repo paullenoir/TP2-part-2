@@ -64,7 +64,7 @@
                                     this.submitStatus = "OK",
                                     localStorage.login = "true",
                                     localStorage.logout = "false",
-                                    localStorage.role_id = 1,
+                                    localStorage.role_id = this.role_id,
                                     localStorage.user_id = response.data.id,
                                     localStorage.userNameApp = this.userName,
                                     this.$router.go(-1)
