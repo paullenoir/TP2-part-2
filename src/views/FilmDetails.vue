@@ -25,7 +25,7 @@
                 <router-link to="/"><button id="lien">Return</button></router-link>
         </div>
 
-        <div id="deuxiemeSection" :class="{active2Section: token}">
+        <div v-if="isConnected" id="deuxiemeSection" :class="{active2Section: token}">
                 <h2>Ajouter une critique</h2>
                 <div id="formAddCritic">
                         <div class="form-group" :class="{ 'form-group--error': $v.score.$error }">
@@ -47,23 +47,23 @@
                         <p class="typo__p" v-if="submitStatus === 'OK'">{{textButton}} efféctué</p>
                         <p class="typo__p" v-if="submitStatus === 'ERROR'">Slp, remplir le champs correctement</p>
                 </div>
-                                
         </div>
 
-        <h2>Commentaires</h2>
-        <div id="troisiemeSection" :class="{active3Section: token}">
-                
-                <div  class="flex-container">
+
+        <div v-if="isConnected" id="troisiemeSection" :class="{active3Section: token}">
+            <hr>
+            <h2>Commentaires</h2>
+                <div v-if="criticLength >= 1" class="flex-container">
                         <li v-for="(critic) in critics" :key="critic.id">  
                                 <div id="essai">
                                         <comments :critic="critic" v-if="isUserCritic(critic.id) != true"></comments>
                                 </div>
-
                         </li>
                 </div>
+                <div v-else><h3>Aucun commentaire</h3></div>
         </div>
         <br>
-        <div id="quatriemeSection" :class="{active4Section: role_id}">
+        <div v-if="isAdmin" id="quatriemeSection" :class="{active4Section: role_id}">
                 <h2>Modifier ou Supprimer un film</h2>
                 <button id="lien" @click="onSelect()" style="margin-bottom:30px;">Formulaire</button>
         </div>
@@ -122,7 +122,10 @@
                                         default: null
                                 },
                                 hasCritic: false,
-                                criticId:""
+                                criticId:"",
+                                isConnected: false,
+                                isAdmin: false,
+                                criticLength: 0,
                         };
                 },
                 validations: {
@@ -138,11 +141,18 @@
                         }
                 },
                 created(){
+                    if(localStorage.user_id){
+                        this.isConnected = true;
+                    }
+                    if(localStorage.role_id === 1){
+                        this.isAdmin = true;
+                    }
                         ApiServices.getFilmWithId(this.id)
                                 .then(response => {
                                         this.films = response.data['film'];
                                         this.changeLengthToHours(this.films.length);
-                                        this.calculScore(response.data['critic'])
+                                        this.calculScore(response.data['critic']);
+                                        this.criticLength = response.data['critic'].length;
                                 })
                                 .catch(error =>{
                                         console.log('Erreur de data : ', error.response)
@@ -195,7 +205,7 @@
                         },
                         makedCritic(user_id){
                                 for (let [key] of Object.entries(this.critics)) {
-                                        if(this.critics[key].user_id == user_id){
+                                        if(this.critics[key].user_id === user_id){
                                                 this.criticId = this.critics[key].id
                                                 this.hasCritic = true;
                                                 this.fillForm(key);
@@ -209,7 +219,7 @@
                         },
                         isUserCritic(aCriticId){
                                 let isSameCritic = false
-                                if(aCriticId == this.criticId){
+                                if(aCriticId === this.criticId){
                                         isSameCritic = true
                                 }
                                 return isSameCritic
@@ -227,7 +237,7 @@
                         else{
                                 this.token = true;
                         }
-                        if (localStorage.role_id == 1) {
+                        if (localStorage.role_id === 1) {
                                 this.role_id = false;
                                 console.log(this.role_id);
                         }

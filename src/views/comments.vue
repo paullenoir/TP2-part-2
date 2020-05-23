@@ -1,14 +1,13 @@
 <template>
     <div>
         <p>Commentaire: {{this.critic.comment}}</p> 
-        <p>Nom du membre: {{userName}}</p> 
+        <p>Nom du membre: {{userName}}</p>
+        <p>Date: {{date}}</p>
         <hr>
     </div>
 </template>
 
 <script>
-    import ApiServices from '../services/ApiServices.js';
-
     export default {
         props: {
             critic: {
@@ -19,20 +18,16 @@
         data(){
             return{
                 userName: "",
-                user_id:""
+                user_id:"",
+                date: "",
             }
         },
         created(){
             console.log(localStorage.token);
             this.user_id = this.critic.user_id;
-            ApiServices.getUserById(this.user_id)
-                .then(response => {
-                    this.userName = response.data;
-                    console.log("reponse:" + response.data);
-                })
-                .catch(error =>{
-                    console.log('erreur de data : ', error.response)
-                })
+            this.date = this.critic.creation_date.substr(0,10)
+            this.userName = this.critic.critic_first_name + ' ' + this.critic.critic_last_name
+
         }
     }
 </script>

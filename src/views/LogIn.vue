@@ -6,7 +6,6 @@
                 <label class="form__label">Nom d'utilisateur: </label>
                 <input class="form__input" v-model="userName" v-model.trim="$v.userName.$model"/>
                 <div class="error" v-if="!$v.userName.required">Le champs est requis</div>
-                <div class="error" v-if="!$v.userName.minLength">Nom d'utilisateur doit avoir plus de {{$v.userName.$params.minLength.min}} lettres.</div>
                 <div class="error" v-if="!$v.userName.maxLength">Nom d'utilisateur doit avoir moins de {{$v.userName.$params.maxLength.max}} lettres.</div>
             </div>
             
@@ -26,7 +25,7 @@
 </template>
 
 <script>
-    import { required, minLength, maxLength} from 'vuelidate/lib/validators'
+    import { required, maxLength} from 'vuelidate/lib/validators'
     import axios from 'axios'
 
     export default {
@@ -43,7 +42,6 @@
         validations: {
             userName: {
                 required,
-                minLength: minLength(4),
                 maxLength: maxLength(50)
             },
             password: {
@@ -64,7 +62,7 @@
                                     this.submitStatus = "OK",
                                     localStorage.login = "true",
                                     localStorage.logout = "false",
-                                    localStorage.role_id = 1,
+                                    localStorage.role_id = response.data.role_id,
                                     localStorage.user_id = response.data.id,
                                     localStorage.userNameApp = this.userName,
                                     this.$router.go(-1)
